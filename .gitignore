@@ -11,4 +11,3 @@ backend-ws/tmp/
 .idea/
 *.sublime-project
 *.sublime-workspace
-*.json
