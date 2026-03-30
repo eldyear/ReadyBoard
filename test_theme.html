@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { background: #f0f0f0; color: #333; font-family: sans-serif; }
+        .ready { color: green; font-weight: bold; }
+        .preparing { color: orange; }
+    </style>
+</head>
+<body>
+    <h1>My Custom Theme Upload</h1>
+    <div id="root"></div>
+    <script>
+        window.ReadyBoard.onUpdate((orders) => {
+            document.getElementById("root").innerHTML = orders.map(o => 
+                `<div class="${o.status}">Order #${o.order_number} (${o.status})</div>`
+            ).join("");
+        });
+    </script>
+</body>
+</html>

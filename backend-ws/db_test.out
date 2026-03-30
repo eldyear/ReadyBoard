@@ -1,0 +1,14 @@
+Created test board 15591579-82cd-4e58-9366-bb9454c65cb3
+Adding 5 orders...
+Created order #10, ID: 161fe1f6-8215-4ed4-a807-6b7123628bad
+Created order #20, ID: ea743cb9-7764-4a49-994a-a63edc989cc6
+Created order #30, ID: c7129d83-3799-40ae-8545-76884946ee73
+Created order #40, ID: 3a4e6125-8e5c-48fe-bd60-93deb54c7f0e
+Created order #50, ID: 6edee873-97e7-42dd-b0a3-c7c67bebd5f6
+Connecting to WebSocket...
+Updating status of order 161fe1f6-8215-4ed4-a807-6b7123628bad to ready...
+Received WS broadcast in 7.56725ms for order 161fe1f6-8215-4ed4-a807-6b7123628bad. Status: ready. Expected: ready
+Updating board configuration...
+Received WS broadcast! OrderID: , Status: . (Empty means it is a board_update!)
+WS Pub/Sub test PASSED.
+WS Read Error: read tcp [::1]:56748->[::1]:80: use of closed network connection

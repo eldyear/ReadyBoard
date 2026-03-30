@@ -1,0 +1,200 @@
+@import '@fontsource/outfit/500.css';
+@import '@fontsource/outfit/600.css';
+@import '@fontsource/outfit/700.css';
+@import '@fontsource/outfit/800.css';
+@import '@fontsource/plus-jakarta-sans/400.css';
+@import '@fontsource/plus-jakarta-sans/500.css';
+@import '@fontsource/plus-jakarta-sans/600.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Premium CSS custom properties ────────────────────────── */
+:root {
+  --clr-bg-base: #FFFFFF;
+  --clr-bg: #FFFFFF;
+  --clr-surface: #FFFFFF;
+  --clr-surface-hover: #F9F9F9;
+  --clr-card: #FFFFFF;
+
+  --clr-border: rgba(0, 0, 0, 0.1);
+  --clr-border-glow: #000000;
+
+  --clr-preparing: rgba(0, 0, 0, 0.4);
+  --clr-ready: #FF3B30;
+  --clr-accent: #000000;
+  --clr-accent-gradient: #000000;
+
+  --clr-text: #000000;
+  --clr-muted: rgba(0, 0, 0, 0.4);
+
+  --radius: 0px;
+  --transition: 0.2s ease-in-out;
+}
+
+/* ── Reset & base ─────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  background-color: var(--clr-bg-base);
+  color: var(--clr-text);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-display {
+  font-family: 'Inter', system-ui, sans-serif;
+  letter-spacing: -0.05em;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+/* ── Minimalist Components ────────────────────── */
+@layer components {
+  .glass-card {
+    @apply border relative overflow-hidden;
+    background: var(--clr-card);
+    border-color: var(--clr-border);
+    transition: var(--transition);
+    border-radius: 0;
+  }
+
+  .glass-card:hover {
+    border-color: #000000;
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 font-bold text-sm transition-all duration-200 uppercase tracking-widest border border-black;
+    background: #000000;
+    color: #ffffff;
+    border-radius: 0;
+  }
+
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+
+  .btn-ghost {
+    @apply px-5 py-3 font-bold text-sm transition-all duration-200 uppercase tracking-widest bg-white border border-black text-black;
+    border-radius: 0;
+  }
+
+  .btn-ghost:hover {
+    background: #000000;
+    color: #ffffff;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 text-sm outline-none transition-all duration-200 bg-white border border-gray-200 text-black;
+    border-radius: 0;
+  }
+
+  .input-field:focus {
+    border-color: #000000;
+  }
+
+  .input-field::placeholder {
+    color: rgba(0, 0, 0, 0.3);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+  }
+
+  .badge-preparing {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] bg-gray-100 text-gray-500;
+    border-radius: 0;
+  }
+
+  .badge-ready {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] bg-white border border-red-500 text-red-500;
+    border-radius: 0;
+  }
+
+  .sidebar-nav-item {
+    @apply flex items-center gap-3 px-4 py-3 text-sm font-bold uppercase tracking-widest transition-all duration-200 cursor-pointer relative overflow-hidden;
+    color: rgba(0, 0, 0, 0.4);
+    border: 1px solid transparent;
+    border-radius: 0;
+  }
+
+  .sidebar-nav-item:hover {
+    color: #000000;
+  }
+
+  .sidebar-nav-item.active {
+    color: #000000;
+  }
+
+  .sidebar-nav-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #ff3b30;
+  }
+}
+
+/* ── Animations ───────────────────────────────────────────── */
+@keyframes slide-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ── Barista Focus Mode ───────────────────────────────────── */
+.focus-mode-active aside,
+.focus-mode-active nav,
+.focus-mode-active .sidebar {
+  display: none !important;
+}
+
+.focus-mode-active main {
+  padding: 1rem !important;
+}
+
+/* ── Mobile Touch Optimizations ──────────────────────────── */
+button,
+[role="button"],
+select,
+label,
+a {
+  touch-action: manipulation;
+  /* Eliminates 300ms tap delay on mobile */
+}
+
+button,
+[role="button"] {
+  min-height: 44px;
+  min-width: 44px;
+}

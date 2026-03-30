@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { background: #000; color: #fff; font-family: 'JetBrains Mono', monospace; margin: 0; padding: 2vh; height: 96vh;}
+        .container { display: flex; height: 100%; gap: 2vw; }
+        .col { flex: 1; display: flex; flex-flow: column wrap; gap: 2vh; align-content: flex-start; }
+        .header { font-size: 5vh; font-weight: bold; margin-bottom: 2vh; border-bottom: 2px solid #333; padding-bottom: 1vh;}
+        .ready .header { color: #ff3b30; text-shadow: 0 0 10px rgba(255, 59, 48, 0.5); border-color: #ff3b30;}
+        .preparing .header { color: #555; }
+        
+        .order { font-size: 15vh; font-weight: bold; line-height: 1; }
+        .ready .order { color: #ff3b30; text-shadow: 0 0 20px rgba(255, 59, 48, 0.5); }
+        .preparing .order { color: #151515; }
+        .order-card { margin-bottom: 1vh; }
+        .items { font-size: 0.9vh; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.6; padding: 0.4vh 0 0.6vh; border-top: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.4); }
+        .ready .items { color: rgba(255, 59, 48, 0.6); border-top-color: rgba(255, 59, 48, 0.2); }
+    </style>
+</head>
+<body>
+    <div class="container" id="root">
+        <div class="col preparing" id="preparing-col">
+            <div class="header">PREPARING</div>
+            <div id="preparing-list"></div>
+        </div>
+        <div class="col ready" id="ready-col">
+            <div class="header">READY</div>
+            <div id="ready-list"></div>
+        </div>
+    </div>
+    <script>
+        window.ReadyBoard.onUpdate((orders) => {
+            const prep = orders.filter(o => o.status === 'preparing');
+            const ready = orders.filter(o => o.status === 'ready');
+            
+            document.getElementById("preparing-list").innerHTML = prep.map(o => `<div class="order-card"><div class="order">${o.counter_number || o.order_number}</div>${o.items && o.items.length ? `<div class="items">${o.items.slice(0,5).map(i => '> ' + i).join('<br>')}${o.items.length > 5 ? '<br>+ ' + (o.items.length-5) + ' more' : ''}</div>` : ''}</div>`).join("");
+            document.getElementById("ready-list").innerHTML = ready.map(o => `<div class="order-card"><div class="order">${o.counter_number || o.order_number}</div>${o.items && o.items.length ? `<div class="items">${o.items.slice(0,5).map(i => '> ' + i).join('<br>')}${o.items.length > 5 ? '<br>+ ' + (o.items.length-5) + ' more' : ''}</div>` : ''}</div>`).join("");
+        });
+    </script>
+</body>
+</html>

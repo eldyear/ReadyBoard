@@ -1,0 +1,14 @@
+.env
+*.env.local
+nginx/certs/
+node_modules/
+dist/
+backend-api/tmp/
+backend-ws/tmp/
+*.log
+.DS_Store
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.json

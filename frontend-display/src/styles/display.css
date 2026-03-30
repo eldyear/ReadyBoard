@@ -1,0 +1,622 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --clr-preparing: #000000;
+    --clr-ready: #FFFFFF;
+    --clr-ready-bg: #FF3B30;
+    --clr-bg: #FFFFFF;
+    --font-scale: 1;
+    font-size: calc(1vw * var(--font-scale));
+}
+
+html,
+body,
+#root {
+    width: 100%;
+    height: 100%;
+    background: var(--clr-bg);
+    color: #000000;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+}
+
+/* ── Layout containers ───────────────────────────────────── */
+.board-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    z-index: 1;
+}
+
+.board-main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    overflow: hidden;
+}
+
+.board-column {
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem;
+    overflow: hidden;
+    background: #FFFFFF;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.board-column:last-child {
+    border-right: none;
+}
+
+.board-column--preparing {
+    background: #FFFFFF;
+}
+
+.board-column--ready {
+    background: #F9F9F9;
+}
+
+/* ── Column headers ──────────────────────────────────────── */
+.col-header {
+    font-weight: 900;
+    font-size: 3rem;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #000000;
+}
+
+.col-header--preparing {
+    color: #000000;
+}
+
+.col-header--ready {
+    color: #FF3B30;
+}
+
+/* ── Order numbers ───────────────────────────────────────── */
+.order-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+    gap: 1rem;
+    align-content: flex-start;
+    overflow: hidden;
+}
+
+.order-number {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 3rem;
+    letter-spacing: -0.05em;
+}
+
+.order-number--preparing {
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    color: #000000;
+}
+
+.order-number--ready {
+    background: #FF3B30;
+    border: 1px solid #FF3B30;
+    color: #FFFFFF;
+}
+
+/* ── Pro mode – menu overlay ─────────────────────────────── */
+.pro-board-main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    overflow: hidden;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.pro-menu-panel {
+    position: relative;
+    overflow: hidden;
+    background: #FFFFFF;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.pro-menu-bg {
+    display: none;
+}
+
+.menu-items-overlay {
+    position: relative;
+    z-index: 10;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: #FFFFFF;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 1.5rem 0;
+}
+
+.menu-item:last-child {
+    border-bottom: none;
+}
+
+.menu-item__name {
+    font-weight: 900;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    flex: 1;
+    color: #000000;
+    text-transform: uppercase;
+}
+
+.menu-item__price {
+    font-family: monospace;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #FF3B30;
+}
+
+.crazy-menu-list {
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem;
+    overflow-y: auto;
+    height: 100%;
+    background: #FFFFFF;
+}
+
+.crazy-menu-list-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.crazy-menu-image-frame {
+    position: relative;
+    flex-shrink: 0;
+    width: 4.5rem;
+    height: 4.5rem;
+    background: #F9F9F9;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.crazy-menu-image-frame img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.crazy-menu-image-frame .image-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: monospace;
+    font-weight: 900;
+    font-size: 1rem;
+    color: #000000;
+    opacity: 0.3;
+}
+
+.crazy-menu-item__name {
+    font-weight: 900;
+    font-size: 1.2rem;
+    letter-spacing: -0.02em;
+    color: #000000;
+    flex: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.crazy-menu-item__price {
+    font-family: monospace;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #FF3B30;
+}
+
+/* ── Ticker footer ───────────────────────────────────────── */
+.ticker-footer {
+    flex-shrink: 0;
+    height: 4rem;
+    background: #000000;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    z-index: 50;
+}
+
+.ticker-text {
+    white-space: nowrap;
+    font-family: monospace;
+    font-size: 1.2rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    animation: ticker-scroll 30s linear infinite;
+    padding-left: 100vw;
+}
+
+/* ── Toast overlay ───────────────────────────────────────── */
+.new-ready-toast {
+    position: fixed;
+    bottom: 6rem;
+    right: 3rem;
+    background: #FF3B30;
+    color: #FFFFFF;
+    padding: 1.5rem 3rem;
+    font-weight: 900;
+    font-size: 3.5rem;
+    letter-spacing: -0.05em;
+    z-index: 100;
+    border: 1px solid #FF3B30;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    box-shadow: 20px 20px 0px rgba(0, 0, 0, 1);
+}
+
+.new-ready-toast::before {
+    content: 'ORDER';
+    font-family: monospace;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.8;
+}
+
+/* ── Connection status ───────────────────────────────────── */
+.connection-badge {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-family: monospace;
+    font-size: 0.8rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    padding: 0.5rem 1rem;
+    border: 1px solid #000000;
+    z-index: 50;
+    background: #FFFFFF;
+    color: #000000;
+}
+
+.connection-badge--disconnected {
+    background: #000000;
+    color: #FF3B30;
+    border-color: #FF3B30;
+}
+
+.connection-badge--connecting {
+    background: #F9F9F9;
+    color: #000000;
+}
+
+/* ── Keyframes ───────────────────────────────────────────── */
+@keyframes ticker-scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Mobile responsiveness  <768px
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+    html {
+        font-size: 14px;
+    }
+
+    .board-main,
+    .pro-board-main {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto !important;
+        padding: 0;
+        gap: 0;
+    }
+
+    .board-column {
+        border-right: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .pro-menu-panel,
+    .crazy-menu-list,
+    .menu-items-overlay {
+        display: none !important;
+    }
+
+    .order-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 1rem;
+    }
+
+    .ticker-footer {
+        font-size: 0.75rem;
+        padding: 0.4rem 0;
+    }
+
+
+    .board-column {
+        padding: 1.5rem;
+    }
+
+    .col-header {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+    }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Activation Screen (Pairing)
+   ════════════════════════════════════════════════════════════════ */
+.activation-screen {
+    width: 100vw;
+    height: 100vh;
+    background: #000000;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+}
+
+.activation-container {
+    border: 10px solid #FFFFFF;
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 56rem;
+    width: 100%;
+    margin: 0 2rem;
+    position: relative;
+    background: transparent;
+}
+
+.activation-corner {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    border: 8px solid #FFFFFF;
+}
+
+.activation-corner--tl {
+    top: 0;
+    left: 0;
+    border-bottom: none;
+    border-right: none;
+    transform: translate(-1rem, -1rem);
+}
+
+.activation-corner--tr {
+    top: 0;
+    right: 0;
+    border-bottom: none;
+    border-left: none;
+    transform: translate(1rem, -1rem);
+}
+
+.activation-corner--bl {
+    bottom: 0;
+    left: 0;
+    border-top: none;
+    border-right: none;
+    transform: translate(-1rem, 1rem);
+}
+
+.activation-corner--br {
+    bottom: 0;
+    right: 0;
+    border-top: none;
+    border-left: none;
+    transform: translate(1rem, 1rem);
+}
+
+.activation-title {
+    font-size: 3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.activation-subtitle {
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 3rem;
+    text-align: center;
+    max-width: 42rem;
+    font-family: monospace;
+}
+
+.activation-subtitle strong {
+    color: #FFFFFF;
+    border-bottom: 2px solid #FFFFFF;
+    padding-bottom: 0rem;
+    margin: 0 0.5rem;
+    margin-bottom: 1rem;
+    font-weight: 900;
+}
+
+.activation-error {
+    color: #FF3B30;
+    font-family: monospace;
+    font-size: 1.25rem;
+    letter-spacing: 0.1em;
+    border: 2px solid #FF3B30;
+    padding: 2rem;
+    animation: activation-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.activation-code-box {
+    font-size: 6rem;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    user-select: all;
+    position: relative;
+    padding: 1rem 3rem;
+    box-shadow: 16px 16px 0 0 rgba(255, 255, 255, 0.2);
+    background: #FFFFFF;
+    color: #000000;
+    transition: all 0.3s ease;
+}
+
+.activation-code-box--linked {
+    background: #34c759;
+    color: #000000;
+    font-size: 6rem;
+}
+
+@media (min-width: 768px) {
+    .activation-code-box {
+        font-size: 10rem;
+    }
+
+    .activation-title {
+        font-size: 4rem;
+    }
+
+    .activation-subtitle {
+        font-size: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .activation-code-box {
+        font-size: 14rem;
+    }
+
+    .activation-code-box--linked {
+        font-size: 8rem;
+    }
+}
+
+.activation-waiting {
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.activation-waiting-line {
+    width: 4rem;
+    height: 0.25rem;
+    background: #FFFFFF;
+    margin-bottom: 1rem;
+}
+
+.activation-waiting-text {
+    font-family: monospace;
+    font-size: 0.875rem;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+}
+
+.activation-dots {
+    display: flex;
+    gap: 0.625rem;
+    margin-top: 0.5rem;
+}
+
+.activation-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: #FFFFFF;
+    border-radius: 9999px;
+    animation: activation-bounce 1s infinite;
+}
+
+.activation-dot:nth-child(1) {
+    animation-delay: -0.3s;
+}
+
+.activation-dot:nth-child(2) {
+    animation-delay: -0.15s;
+}
+
+.activation-version {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    color: rgba(255, 255, 255, 0.2);
+    font-family: monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+@keyframes activation-pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes activation-bounce {
+
+    0%,
+    100% {
+        transform: translateY(-25%);
+        animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+
+    50% {
+        transform: translateY(0);
+        animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+}

@@ -1,0 +1,5 @@
+BEGIN;
+
+ALTER TABLE boards DROP COLUMN IF EXISTS api_key;
+
+COMMIT;

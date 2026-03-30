@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { background: #fff; color: #000; font-family: 'Inter', sans-serif; margin: 0; padding: 4vh; height: 92vh;}
+        .container { display: flex; height: 100%; gap: 4vw; }
+        .col { flex: 1; display: flex; flex-flow: column wrap; gap: 2vh; align-content: flex-start; border-top: 10px solid #000; padding-top: 2vh;}
+        .header { font-size: 4vh; font-weight: 900; text-transform: uppercase; letter-spacing: -0.05em;}
+        
+        .order { font-size: 18vh; font-weight: 900; line-height: 0.9; letter-spacing: -0.05em; }
+        .ready .order { color: #ff3b30; }
+        .preparing .order { color: #e5e5e5; }
+        .ready-col { border-top-color: #ff3b30; }
+        .order-card { margin-bottom: 1.5vh; }
+        {% comment %} .items { font-size: 0.9vh; font-family: 'Courier New', monospace; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.7; padding: 0.5vh 0 0.5vh; border-top: 1px solid rgba(0,0,0,0.12); color: rgba(0,0,0,0.4); } {% endcomment %}
+        .items { 
+    /* Делаем шрифт фиксированно мелким */
+    font-size: 12px; 
+    font-family: 'Courier New', monospace; 
+    letter-spacing: 0.02em; /* Чуть уменьшил разрядку для читаемости */
+    text-transform: uppercase; 
+    line-height: 1.2; 
+    padding-top: 1vh; 
+    margin-top: -2vh; /* Подтягиваем список ближе к огромному номеру */
+    border-top: 2px solid rgba(0,0,0,1); /* Делаем линию в стиле брутализма — жирнее */
+    color: rgba(0,0,0,0.6); 
+    max-width: 40vw; /* Ограничиваем ширину, чтобы не раздувало колонку */
+}
+
+.ready .items { 
+    color: #ff3b30; 
+    border-top-color: #ff3b30; 
+}
+
+/* Фикс для самой карточки, чтобы номер и список были единым целым */
+.order-card { 
+    margin-bottom: 4vh; 
+    display: flex;
+    flex-direction: column;
+}
+        .ready .items { color: rgba(255, 59, 48, 0.6); border-top-color: rgba(255, 59, 48, 0.2); }
+    </style>
+</head>
+<body>
+    <div class="container" id="root">
+        <div class="col preparing-col" id="preparing-col">
+            <div class="header">Cooking</div>
+            <div class="preparing" id="preparing-list"></div>
+        </div>
+        <div class="col ready-col" id="ready-col">
+            <div class="header" style="color: #ff3b30;">Pick Up</div>
+            <div class="ready" id="ready-list"></div>
+        </div>
+    </div>
+    <script>
+        window.ReadyBoard.onUpdate((orders) => {
+            const prep = orders.filter(o => o.status === 'preparing');
+            const ready = orders.filter(o => o.status === 'ready');
+            
+            document.getElementById("preparing-list").innerHTML = prep.map(o => `<div class="order-card"><div class="order">${o.counter_number || o.order_number}</div>${o.items && o.items.length ? `<div class="items">${o.items.slice(0,5).map(i => '> ' + i).join('<br>')}${o.items.length > 5 ? '<br>+ ' + (o.items.length-5) + ' more' : ''}</div>` : ''}</div>`).join("");
+            document.getElementById("ready-list").innerHTML = ready.map(o => `<div class="order-card"><div class="order">${o.counter_number || o.order_number}</div>${o.items && o.items.length ? `<div class="items">${o.items.slice(0,5).map(i => '> ' + i).join('<br>')}${o.items.length > 5 ? '<br>+ ' + (o.items.length-5) + ' more' : ''}</div>` : ''}</div>`).join("");
+        });
+    </script>
+</body>
+</html>
